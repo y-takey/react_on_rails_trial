@@ -1,5 +1,7 @@
 {
   "name": "react_on_rails_trial",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "react-on-rails": "^10.0.2"
+  }
 }
