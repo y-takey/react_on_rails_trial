@@ -3,10 +3,10 @@
   <head>
     <title>React on Rails TRIAL</title>
     <%= csrf_meta_tags %>
-    <%= javascript_pack_tag 'bundle' %>
   </head>
 
-  <body>
+  <body style="margin: 0px;">
     <%= yield %>
+    <%= javascript_pack_tag 'bundle' %>
   </body>
 </html>

@@ -5,6 +5,7 @@ import lightGreen from "material-ui/colors/lightGreen";
 import lightBlue from "material-ui/colors/lightBlue";
 import red from "material-ui/colors/red";
 import Button from "material-ui/Button";
+import Frame from "./Frame";
 
 const theme = createMuiTheme({
   palette: {
@@ -17,12 +18,7 @@ const theme = createMuiTheme({
 export default () => {
   return (
     <MuiThemeProvider theme={theme}>
-      <div>
-        <Button raised color="primary">
-          Primary
-        </Button>
-        <Button color="accent">Accent</Button>
-      </div>
+      <Frame />
     </MuiThemeProvider>
   );
 };
