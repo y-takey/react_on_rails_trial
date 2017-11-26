@@ -1,11 +1,10 @@
 # react_on_rails_trial
 Trial for react_on_rails gem
 
-* Ruby version
+* Ruby version: 2.4.1(p111)
+* Rails version: 5.1.4
+* react_on_rails version: 10.0.2
 
-* System dependencies
-
-* Configuration
 
 * Database creation
 
