@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  get '/', to: 'application#root'
+  devise_for :users
+  root 'application#root'
 end
