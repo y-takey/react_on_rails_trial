@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import classNames from "classnames";
 import { withStyles } from "material-ui/styles";
 import Drawer from "material-ui/Drawer";
@@ -15,6 +16,9 @@ import ChevronRightIcon from "material-ui-icons/ChevronRight";
 import GroupIcon from "material-ui-icons/Android";
 import TodoIcon from "material-ui-icons/AlarmOn";
 import ChartIcon from "material-ui-icons/Assessment";
+import GroupList from "./components/group/List";
+import TodoList from "./components/todo/List";
+import ChartList from "./components/chart/List";
 
 const drawerWidth = 240;
 
@@ -99,12 +103,36 @@ const styles = theme => ({
   }
 });
 
-const menuItem = ([title, Icon]) =>
+const routes = [
+  {
+    path: "/",
+    exact: true,
+    main: GroupList
+  },
+  {
+    path: "/groups",
+    main: GroupList
+  },
+  {
+    path: "/todos",
+    main: TodoList
+  },
+  {
+    path: "/charts",
+    main: ChartList
+  }
+];
+
+const menuItem = ([title, Icon, path]) =>
   <ListItem button key={`list-${title}`}>
     <ListItemIcon>
-      <Icon />
+      <Link to={path}>
+        <Icon />
+      </Link>
     </ListItemIcon>
-    <ListItemText primary={title} />
+    <Link to={path}>
+      <ListItemText primary={title} />
+    </Link>
   </ListItem>;
 
 class Frame extends React.Component {
@@ -124,52 +152,54 @@ class Frame extends React.Component {
     const { classes, theme } = this.props;
 
     return (
-      <div className={classes.root}>
-        <div className={classes.appFrame}>
-          <AppBar className={classNames(classes.appBar, this.state.open && classes.appBarShift)}>
-            <Toolbar disableGutters={!this.state.open}>
-              <IconButton
-                color="contrast"
-                onClick={this.handleDrawerOpen}
-                className={classNames(classes.menuButton, this.state.open && classes.hide)}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography type="title" color="inherit" noWrap>
-                React on Rails TRIAL
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <Drawer
-            type="permanent"
-            open={this.state.open}
-            classes={{
-              paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose)
-            }}
-          >
-            <div className={classes.drawerInner}>
-              <div className={classes.drawerHeader}>
-                <IconButton onClick={this.handleDrawerClose}>
-                  <ChevronLeftIcon />
+      <Router>
+        <div className={classes.root}>
+          <div className={classes.appFrame}>
+            <AppBar className={classNames(classes.appBar, this.state.open && classes.appBarShift)}>
+              <Toolbar disableGutters={!this.state.open}>
+                <IconButton
+                  color="contrast"
+                  onClick={this.handleDrawerOpen}
+                  className={classNames(classes.menuButton, this.state.open && classes.hide)}
+                >
+                  <MenuIcon />
                 </IconButton>
+                <Typography type="title" color="inherit" noWrap>
+                  React on Rails TRIAL
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <Drawer
+              type="permanent"
+              open={this.state.open}
+              classes={{
+                paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose)
+              }}
+            >
+              <div className={classes.drawerInner}>
+                <div className={classes.drawerHeader}>
+                  <IconButton onClick={this.handleDrawerClose}>
+                    <ChevronLeftIcon />
+                  </IconButton>
+                </div>
+                <Divider />
+                <List>
+                  {[["Group", GroupIcon, "/groups"], ["ToDo", TodoIcon, "/todos"]].map(menuItem)}
+                </List>
+                <Divider />
+                <List>
+                  {menuItem(["Chart", ChartIcon, "/charts"])}
+                </List>
               </div>
-              <Divider />
-              <List>
-                {[["Group", GroupIcon], ["ToDo", TodoIcon]].map(menuItem)}
-              </List>
-              <Divider />
-              <List>
-                {menuItem(["Chart", ChartIcon])}
-              </List>
-            </div>
-          </Drawer>
-          <main className={classes.content}>
-            <Typography type="body1" noWrap>
-              {"You think water moves fast? You should see ice."}
-            </Typography>
-          </main>
+            </Drawer>
+            <main className={classes.content}>
+              {routes.map((route, index) =>
+                <Route key={index} path={route.path} exact={route.exact} component={route.main} />
+              )}
+            </main>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
