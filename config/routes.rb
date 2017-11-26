@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root 'application#root'
 
   resources :groups
+  resources :tasks
 end
