@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import classNames from "classnames";
 import { withStyles } from "material-ui/styles";
 import Drawer from "material-ui/Drawer";
@@ -16,6 +16,7 @@ import ChevronRightIcon from "material-ui-icons/ChevronRight";
 import GroupIcon from "material-ui-icons/Android";
 import TodoIcon from "material-ui-icons/AlarmOn";
 import ChartIcon from "material-ui-icons/Assessment";
+import Login from "./components/Login";
 import GroupList from "./components/group/List";
 import TodoList from "./components/todo/List";
 import ChartList from "./components/chart/List";
@@ -110,6 +111,10 @@ const routes = [
     main: GroupList
   },
   {
+    path: "/login",
+    main: Login
+  },
+  {
     path: "/groups",
     main: GroupList
   },
@@ -149,7 +154,7 @@ class Frame extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { isAuthenticated, classes, theme } = this.props;
 
     return (
       <Router>
@@ -193,9 +198,17 @@ class Frame extends React.Component {
               </div>
             </Drawer>
             <main className={classes.content}>
-              {routes.map((route, index) =>
-                <Route key={index} path={route.path} exact={route.exact} component={route.main} />
-              )}
+              <Route path="/login" component={Login} />
+              {isAuthenticated
+                ? routes.map((route, index) =>
+                    <Route key={index} path={route.path} exact={route.exact} component={route.main} />
+                  )
+                : <Redirect
+                    to={{
+                      pathname: "/login",
+                      state: { from: this.props.location }
+                    }}
+                  />}
             </main>
           </div>
         </div>

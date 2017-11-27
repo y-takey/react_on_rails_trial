@@ -15,10 +15,10 @@ const theme = createMuiTheme({
   }
 });
 
-export default () => {
+export default props => {
   return (
     <MuiThemeProvider theme={theme}>
-      <Frame />
+      <Frame {...props} />
     </MuiThemeProvider>
   );
 };
