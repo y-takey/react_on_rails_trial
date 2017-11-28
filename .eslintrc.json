@@ -1,0 +1,16 @@
+{
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["react"],
+  "rules": {
+    "dot-location": ["warn", "object"],
+    "newline-per-chained-call": ["off"],
+    "no-whitespace-before-property": ["off"]
+  }
+}
