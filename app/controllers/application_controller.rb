@@ -3,5 +3,6 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!, except: :root
 
   def root
+    redux_store("foo", props: { isAuthenticated: user_signed_in? })
   end
 end
